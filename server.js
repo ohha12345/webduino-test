@@ -17,19 +17,28 @@ app.get('/', function (req, res) {
     boardReady({ board: 'Bit', device: deviceID, transport: 'mqtt' }, function (board) {
       board.samplingInterval = 250;
       matrix = getMatrix(board, 4, 25);
-      timer = setInterval(() => {
-        try {
-          a = a * -1;
-          if (a < 0) {
-            matrix.setColor('000');
-          } else {
-            matrix.setColor(color);
+      if (t == 0) {
+        matrix.setColor(color);
+      } else {
+        timer = setInterval(() => {
+          try {
+            a = a * -1;
+            if (a < 0) {
+              matrix.setColor('000');
+            } else {
+              matrix.setColor(color);
+            }
+          } catch (error) {
+            clearInterval(timer);
+            console.log(error);
           }
-        } catch (error) {
-          clearInterval(timer);
-          console.log('連線異常');
-        }
-      }, t);
+        }, t);
+      }
+      board.on('error', function (err) {
+        console.log('裝置錯誤 or 連線異常');
+        console.log(err);
+        clearInterval(timer);
+      });
     });
     console.log(deviceID + '連線成功，開始閃爍');
     res.status(200).send(deviceID + '連線成功，開始閃爍');
