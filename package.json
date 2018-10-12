@@ -6,7 +6,8 @@
   "dependencies": {
     "express": "^4.13.4",
     "webduino-bit-modules": "^1.0.0",
-    "webduino-blockly": "0.0.12"
+    "webduino-blockly": "0.0.12",
+    "request": "^2.87.0"
   },
   "engine": {
     "node": "*",
