@@ -10,12 +10,19 @@ app.get('/', function (req, res) {
   console.log(req.query);
   
   if( deviceID ){
-    var matrix;
-
+    let matrix;
+    let a = -1;
     boardReady({board: 'Bit', device: deviceID, transport: 'mqtt'}, function (board) {
       board.samplingInterval = 250;
       matrix = getMatrix(board, 4, 25);
-      matrix.setColor(color);
+      setInterval(()=>{
+        a = a*-1;
+        if(a<0){
+          matrix.setColor('000');
+        }else{
+          matrix.setColor(color);
+        }
+      },10000);
     });
 
     res.status(200).send('Success');
@@ -25,5 +32,5 @@ app.get('/', function (req, res) {
 });
 
 app.listen(8080, function () {
-  console.log('Example app listening on port 3000!');
+  console.log('Example app listening on port 8080!');
 });
