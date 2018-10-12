@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
   console.log(req.query);
 
   if (deviceID) {
-    let matrix;
+    let matrix, pin;
     let a = -1;
     let timer;
     boardReady({ board: 'Bit', device: deviceID, transport: 'mqtt' }, function (board) {
@@ -21,17 +21,19 @@ app.get('/', function (req, res) {
         matrix.setColor(color);
       } else {
         timer = setInterval(() => {
-          try {
+          pin = -1;
+          pin = getPin(board, bitGPIO(1));
+          if(pin<0){
+            console.log('裝置錯誤 or 連線異常');
+            clearInterval(timer);
+          }else{
             a = a * -1;
             if (a < 0) {
               matrix.setColor('000');
             } else {
               matrix.setColor(color);
             }
-          } catch (error) {
-            clearInterval(timer);
-            console.log(error);
-          }
+          } 
         }, t);
       }
       board.on('error', function (err) {
