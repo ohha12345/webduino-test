@@ -1,0 +1,25 @@
+{
+  "name": "webduino-test",
+  "version": "0.0.1",
+  "description": "Webduino bit Node.js test",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "webduino-bit-modules": "^1.0.0",
+    "webduino-blockly": "0.0.12"
+  },
+  "engine": {
+    "node": "*",
+    "npm": "*"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ohha12345/webduino-test.git"
+  },
+  "author": "ohha <ohha12345@gmail.com>",
+  "license": "CC-BY-1.0",
+  "homepage": "https://webduino.io"
+}
